@@ -132,6 +132,34 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.jvnet.ws.wadl</groupId>
+        <artifactId>wadl-client-plugin</artifactId>
+        <version>1.1.6</version>
+        <configuration>
+          <generationStyle>jaxrs20</generationStyle>
+          <targets>
+            <!-- copy of a normal resource.wadl -> but duplicated in order to get rid of basic auth challenge! -->
+            <target>http://localhost:8000/application.wadl</target>
+            <!-- <target>http://theBoss:theBoss@localhost:8081/designer/api/application.wadl</target> -->
+          </targets>
+          <!-- package: only impacts the client representation. which we are not going to use -->
+          <packageName>wadl.person.client</packageName>
+        </configuration>
+        <executions>
+          <execution>
+            <id>rest.client.ivy.wadl</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <!-- target package dir for client POJOs being sent to and fro -->
+              <targetDirectory>${basedir}/src_generated</targetDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin> 
     </plugins>
     <pluginManagement>
       <plugins>
